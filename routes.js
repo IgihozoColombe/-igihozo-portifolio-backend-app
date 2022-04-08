@@ -32,6 +32,17 @@ router.post("/create", upload.single("image"), async (req, res) => {
     } catch (err) {
       console.log(err);
     }});
+
+    router.get("/:id", async (req, res) => {
+      try {
+        const article = await Article.findById(req.params.id);
+        res.send(article);
+      } catch {
+        res.status(404);
+        res.send({ error: "Post doesn't exist!" });
+      }
+    });
+
     router.delete("/:id", async (req, res) => {
       try {
       
