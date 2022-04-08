@@ -4,11 +4,14 @@ const upload = require("./utils/multer");
 const Article = require("./models/article");
 const bcrypt= require('bcryptjs')
 const { result } = require("lodash");
+const Joi=require('joi')
 router.get('/welcome',(req,res)=>{
   res.send('This is a welcome page.Please welcome to our Application')
 })
-router.post("/cloud", upload.single("image"), async (req, res) => {
+router.post("/create", upload.single("image"), async (req, res) => {
   try {
+    const {error} = articleCreation(req.body)
+    if(error) return res.send(error.details[0].message).status(400)
     const result = await cloudinary.uploader.upload(req.file.path, {folder:"articles"});
     let article = new Article({
       title:req.body.title,
@@ -60,4 +63,14 @@ router.post("/cloud", upload.single("image"), async (req, res) => {
         } catch (err) {
           console.log(err);
         }});
+        function articleCreation(req){
+          const Schema = Joi.object({
+            title:Joi.string().max(20).min(8).required(),
+            body:Joi.string().max(100).min(10).required(),
+            image:Joi.string().max(30).min(4)
+                    
+          })
+          return Schema.validate(req)
+        }
+        
  module.exports = router;
