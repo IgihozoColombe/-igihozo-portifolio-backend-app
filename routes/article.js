@@ -9,7 +9,7 @@ router.get('/welcome',(req,res)=>{
   res.send('This is a welcome page.Please welcome to our Application')
 })
 
-router.post("/create", upload.single("image"), async (req, res) => {
+router.post("/create", upload.single("image"),requireLogin, async (req, res) => {
   try {
     const {error} = articleCreation(req.body)
     if(error) return res.send(error.details[0].message).status(400)
@@ -35,7 +35,7 @@ router.post("/create", upload.single("image"), async (req, res) => {
       console.log(err);
     }});
 
-    router.get("/:id", async (req, res) => {
+    router.get("/:id",async (req, res) => {
       try {
         const article = await Article.findById(req.params.id);
         res.send(article);
@@ -45,7 +45,7 @@ router.post("/create", upload.single("image"), async (req, res) => {
       }
     });
 
-    router.delete("/:id", async (req, res) => {
+    router.delete("/:id",requireLogin, async (req, res) => {
       try {
       
         let article = await Article.findById(req.params.id);
@@ -58,7 +58,7 @@ router.post("/create", upload.single("image"), async (req, res) => {
         console.log(err);
       }});
 
-      router.put("/:id", upload.single("image"), async (req, res) => {
+      router.put("/:id", upload.single("image"),requireLogin,async (req, res) => {
         try {
           let article = await Article.findById(req.params.id);
           await cloudinary.uploader.destroy(article.cloudinary_id);
@@ -77,23 +77,8 @@ router.post("/create", upload.single("image"), async (req, res) => {
         } catch (err) {
           console.log(err);
         }});
-        function articleCreation(req){
-          const Schema = Joi.object({
-            title:Joi.string().max(20).min(8).required(),
-            body:Joi.string().max(100).min(10).required(),
-            status:Joi.string().max(10).min(3).required(),
-            image: Joi.any()
-            .meta({swaggerType: 'file'})
-            .optional()
-            .description('Image File')
-          
-                    
-          })
-          return Schema.validate(req)
-        }
-
         router.put('/like',requireLogin,(req,res)=>{
-          Post.findByIdAndUpdate(req.body.postId,{
+          Article.findByIdAndUpdate(req.body.postId,{
               $push:{likes:req.user._id}
           },{
               new:true
@@ -108,7 +93,7 @@ router.post("/create", upload.single("image"), async (req, res) => {
       
       
       router.put('/unlike',requireLogin,(req,res)=>{
-          Post.findByIdAndUpdate(req.body.postId,{
+          Article.findByIdAndUpdate(req.body.postId,{
               $pull:{likes:req.user._id}
           },{
               new:true
@@ -127,7 +112,7 @@ router.post("/create", upload.single("image"), async (req, res) => {
               text:req.body.text,
               postedBy:req.user._id
           }
-          Post.findByIdAndUpdate(req.body.postId,{
+          Article.findByIdAndUpdate(req.body.postId,{
               $push:{comments:comment}
           },{
               new:true
@@ -142,5 +127,21 @@ router.post("/create", upload.single("image"), async (req, res) => {
               }
           })
       })
+        function articleCreation(req){
+          const Schema = Joi.object({
+            title:Joi.string().max(20).min(8).required(),
+            body:Joi.string().max(100).min(10).required(),
+            status:Joi.string().max(10).min(3).required(),
+            image: Joi.any()
+            .meta({swaggerType: 'file'})
+            .optional()
+            .description('Image File')
+          
+                    
+          })
+          return Schema.validate(req)
+        }
+
+   
         
  module.exports = router;

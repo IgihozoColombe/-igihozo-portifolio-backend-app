@@ -1,6 +1,5 @@
-
-
 const mongoose = require('mongoose')
+const {ObjectId} = mongoose.Schema.Types
 const userSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -19,7 +18,18 @@ const userSchema = new mongoose.Schema({
     status:{
       type:String,
       required:true
-  }
+  },
+  likes:[{type:ObjectId,ref:"User"}],
+
+  comments:[{
+      text:String,
+      postedBy:{type:ObjectId,ref:"User"}
+  }],
+  
+  postedBy:{
+    type:ObjectId,
+    ref:"User"
+ }
 })
 
 module.exports = mongoose.model("Article", userSchema)
