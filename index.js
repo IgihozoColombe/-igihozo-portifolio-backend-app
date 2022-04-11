@@ -10,7 +10,7 @@ const URL = "mongodb://0.0.0.0:27017/articles";
 mongoose.connect(URL,{
     useNewUrlParser:true,
     useUnifiedTopology: true,
-    // useCreateIndex: true
+    useCreateIndex: true
 
 })
 mongoose.connection.on('connected',()=>{
@@ -21,6 +21,7 @@ mongoose.connection.on('ecrror',(err)=>{
 })
 mongoose.set('useFindAndModify',false);
 require('./models/article')
+require('./models/user')
 
 app.use(express.json())
 app.use(cors())
@@ -28,7 +29,9 @@ var bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
 app.use(express.json());
-app.use('/article', require('./routes'))
+app.use('/user',require('./routes/user'))
+app.use('/article', require('./routes/article'))
+
 if(process.env.NODE_ENV=="production"){
     app.use(express.static('client/build'))
     const path = require('path')

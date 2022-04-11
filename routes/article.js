@@ -1,13 +1,14 @@
 const router = require("express").Router();
-const cloudinary = require("./utils/cloudinary");
-const upload = require("./utils/multer");
-const Article = require("./models/article");
-const bcrypt= require('bcryptjs')
-const { result } = require("lodash");
+const cloudinary = require("../utils/cloudinary");
+const upload = require("../utils/multer");
+const Article = require("../models/article");
 const Joi=require('joi')
+const requireLogin = require('../middleware/requireLogin') 
+
 router.get('/welcome',(req,res)=>{
   res.send('This is a welcome page.Please welcome to our Application')
 })
+
 router.post("/create", upload.single("image"), async (req, res) => {
   try {
     const {error} = articleCreation(req.body)
@@ -16,6 +17,7 @@ router.post("/create", upload.single("image"), async (req, res) => {
     let article = new Article({
       title:req.body.title,
       body:req.body.body,
+      status:req.body.status,
       avatar: result.secure_url,
       cloudinary_id: result.public_id,
      
@@ -64,6 +66,7 @@ router.post("/create", upload.single("image"), async (req, res) => {
           const data = {
             title: req.body.title || article.title,
             body:req.body.body || article.body,
+            status:req.body.status || articles.status,
             avatar: result.secure_url || article.avatar,
             cloudinary_id: result.public_id || article.cloudinary_id,
           };
@@ -78,10 +81,66 @@ router.post("/create", upload.single("image"), async (req, res) => {
           const Schema = Joi.object({
             title:Joi.string().max(20).min(8).required(),
             body:Joi.string().max(100).min(10).required(),
-            image:Joi.string().max(30).min(4)
+            status:Joi.string().max(10).min(3).required(),
+            image: Joi.any()
+            .meta({swaggerType: 'file'})
+            .optional()
+            .description('Image File')
+          
                     
           })
           return Schema.validate(req)
         }
+
+        router.put('/like',requireLogin,(req,res)=>{
+          Post.findByIdAndUpdate(req.body.postId,{
+              $push:{likes:req.user._id}
+          },{
+              new:true
+          }).exec((err,result)=>{
+              if(err){
+                  return res.status(422).json({error:err})
+              }else{
+                  res.json(result)
+              }
+          })
+      })
+      
+      
+      router.put('/unlike',requireLogin,(req,res)=>{
+          Post.findByIdAndUpdate(req.body.postId,{
+              $pull:{likes:req.user._id}
+          },{
+              new:true
+          }).exec((err,result)=>{
+              if(err){
+                  return res.status(422).json({error:err})
+              }else{
+                  res.json(result)
+              }
+          })
+      })
+      
+      
+      router.put('/comment',requireLogin,(req,res)=>{
+          const comment = {
+              text:req.body.text,
+              postedBy:req.user._id
+          }
+          Post.findByIdAndUpdate(req.body.postId,{
+              $push:{comments:comment}
+          },{
+              new:true
+          })
+          .populate("comments.postedBy","_id name")
+          .populate("postedBy","_id name")
+          .exec((err,result)=>{
+              if(err){
+                  return res.status(422).json({error:err})
+              }else{
+                  res.json(result)
+              }
+          })
+      })
         
  module.exports = router;
