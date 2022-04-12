@@ -61,6 +61,8 @@ router.post("/create", upload.single("image"),requireLogin, async (req, res) => 
 
       router.put("/:id", upload.single("image"),requireLogin,async (req, res) => {
         try {
+          const {error} = articleCreation(req.body)
+          if(error) return res.send(error.details[0].message).status(400)
           let article = await Article.findById(req.params.id);
           await cloudinary.uploader.destroy(article.cloudinary_id);
           const result = await cloudinary.uploader.upload(req.file.path);
@@ -78,8 +80,8 @@ router.post("/create", upload.single("image"),requireLogin, async (req, res) => 
         } catch (err) {
           console.log(err);
         }});
-        router.put('/like',requireLogin,(req,res)=>{
-          Article.findByIdAndUpdate(req.body.articleId,{
+        router.put('/like/:id',requireLogin,(req,res)=>{
+          Article.findByIdAndUpdate(req.params.id,{
               $push:{likes:req.user._id}
           },{
               new:true
@@ -93,8 +95,8 @@ router.post("/create", upload.single("image"),requireLogin, async (req, res) => 
       })
       
       
-      router.put('/unlike',requireLogin,(req,res)=>{
-          Article.findByIdAndUpdate(req.body.articleId,{
+      router.put('/unlike/:id',requireLogin,(req,res)=>{
+          Article.findByIdAndUpdate(req.params.id,{
               $pull:{likes:req.user._id}
           },{
               new:true
@@ -108,17 +110,17 @@ router.post("/create", upload.single("image"),requireLogin, async (req, res) => 
       })
       
       
-      router.put('/comment',requireLogin,(req,res)=>{
+      router.put('/comment/:id',requireLogin,(req,res)=>{
           const comment = {
               text:req.body.text,
               postedBy:req.user._id
           }
-          Article.findByIdAndUpdate(req.body.articleId,{
+          Article.findByIdAndUpdate(req.params.id,{
               $push:{comments:comment}
           },{
               new:true
           })
-          console.log(postedBy)
+    
           .populate("comments.postedBy","_id name")
           .populate("postedBy","_id name")
           .exec((err,result)=>{
@@ -126,6 +128,7 @@ router.post("/create", upload.single("image"),requireLogin, async (req, res) => 
                   return res.status(422).json({error:err})
               }else{
                   res.json(result)
+                      
               }
           })
       })

@@ -9,7 +9,8 @@ const JWT_SECRET = require('../key')
 const Joi=require('joi')
 
 router.post("/signup",async(req,res)=>{
-    validation.validate(req.body)
+    const {error} = validation(req.body)
+    if(error) return res.send(error.details[0].message).status(400)
     let password=await req.body.password
     let salt=await bcrypt.genSalt(5)
     let hashedPassword=await bcrypt.hash(password,salt)
@@ -34,10 +35,13 @@ router.post("/signup",async(req,res)=>{
 
 
 router.post('/signin',(req,res)=>{
+    
     const {email,password} = req.body
     if(!email || !password){
        return res.status(422).send("please add email or password")
     }
+    const {error} = loginvalidation(req.body)
+    if(error) return res.send(error.details[0].message).status(400)
     User.findOne({email:email})
     .then(savedUser=>{
         if(!savedUser){
@@ -76,6 +80,7 @@ router.post('/signin',(req,res)=>{
     .then((users)=>{
         res.json({users})
         console.log(users);
+        console.log(savedUser);
 
     }).catch(err=>{
         console.log(err)
@@ -85,14 +90,24 @@ router.post('/signin',(req,res)=>{
   
 
     
-    const validation=Joi.object().keys({
-        firstname:Joi.string().required(true).min(2).max(50),
-        lastname:Joi.string().required(true).min(2).max(50),
-  username:Joi.string().required(true).min(2).max(50),
-  email:Joi.string().min(12).max(50).required(true),
-  password:Joi.string().min(8).max(15).required(true)
-})
+function loginvalidation(req){
+    const Schema = Joi.object({
+        email:Joi.string().email().required(),
+        password:Joi.string().min(8).max(15).required(true) 
+    })
+    return Schema.validate(req)
+  }
 
+function validation(req){
+    const Schema = Joi.object({
+        firstname:Joi.string().required(true).min(3).max(50),
+        lastname:Joi.string().required(true).min(3).max(50),
+        username:Joi.string().required(true).min(3).max(50),
+        email:Joi.string().email().required(),
+        password:Joi.string().min(8).max(15).required(true) 
+    })
+    return Schema.validate(req)
+  }
 
 module.exports=router
 
