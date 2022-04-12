@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const {ObjectId} = mongoose.Schema.Types
-const userSchema = new mongoose.Schema({
+const articleSchema = new mongoose.Schema({
   title: {
     type: String,
 	required:true
@@ -30,6 +30,6 @@ const userSchema = new mongoose.Schema({
     type:ObjectId,
     ref:"User"
  }
-})
+},{timestamps:true})
 
-module.exports = mongoose.model("Article", userSchema)
+module.exports = mongoose.model("Article", articleSchema)

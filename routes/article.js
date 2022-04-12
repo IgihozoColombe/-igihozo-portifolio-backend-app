@@ -24,6 +24,7 @@ router.post("/create", upload.single("image"),requireLogin, async (req, res) => 
     });
     await article.save();
     res.json(article);
+ 
   } catch (err) {
     console.log(err);
   }});
@@ -78,7 +79,7 @@ router.post("/create", upload.single("image"),requireLogin, async (req, res) => 
           console.log(err);
         }});
         router.put('/like',requireLogin,(req,res)=>{
-          Article.findByIdAndUpdate(req.body.postId,{
+          Article.findByIdAndUpdate(req.body.articleId,{
               $push:{likes:req.user._id}
           },{
               new:true
@@ -93,7 +94,7 @@ router.post("/create", upload.single("image"),requireLogin, async (req, res) => 
       
       
       router.put('/unlike',requireLogin,(req,res)=>{
-          Article.findByIdAndUpdate(req.body.postId,{
+          Article.findByIdAndUpdate(req.body.articleId,{
               $pull:{likes:req.user._id}
           },{
               new:true
@@ -112,11 +113,12 @@ router.post("/create", upload.single("image"),requireLogin, async (req, res) => 
               text:req.body.text,
               postedBy:req.user._id
           }
-          Article.findByIdAndUpdate(req.body.postId,{
+          Article.findByIdAndUpdate(req.body.articleId,{
               $push:{comments:comment}
           },{
               new:true
           })
+          console.log(postedBy)
           .populate("comments.postedBy","_id name")
           .populate("postedBy","_id name")
           .exec((err,result)=>{
