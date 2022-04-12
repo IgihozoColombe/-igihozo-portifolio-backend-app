@@ -80,6 +80,8 @@ router.post("/create", upload.single("image"),requireLogin, async (req, res) => 
         } catch (err) {
           console.log(err);
         }});
+
+
         router.put('/like/:id',requireLogin,(req,res)=>{
           Article.findByIdAndUpdate(req.params.id,{
               $push:{likes:req.user._id}
@@ -132,6 +134,7 @@ router.post("/create", upload.single("image"),requireLogin, async (req, res) => 
               }
           })
       })
+      
         function articleCreation(req){
           const Schema = Joi.object({
             title:Joi.string().max(20).min(8).required(),
