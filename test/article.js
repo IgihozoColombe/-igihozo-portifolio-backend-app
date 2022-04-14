@@ -91,12 +91,12 @@ describe('Articles', () => {
         let book = new Article({title: "The Chronicles of Narnia", body: "J.R.R. Tolkien", status: "pending"})
         book.save((err, book) => {
               chai.request(server)
-              .put('/book/' + book.id)
+              .put('/article/' + book.id)
               .send({title: "The Chronicles of Narnia", body: "J.R.R. Tolkien", status: "pending"})
               .end((err, res) => {
-                    res.should.have.status(404);
+                    res.should.have.status(200);
                     res.body.should.be.a('object');
-                    // res.body.book.should.have.property('status').eql("pending");
+              
                 done();
               });
         });
@@ -107,12 +107,10 @@ describe('/DELETE/:id book', () => {
         let book = new Article({title: "The Chronicles of Narnia", body: "J.R.R. Tolkien", status: "pending"})
         book.save((err, book) => {
               chai.request(server)
-              .delete('/book/' + book.id)
+              .delete('/article/' + book.id)
               .end((err, res) => {
-                    res.should.have.status(404);
+                    res.should.have.status(401);
                     res.body.should.be.a('object');
-                    // res.body.article.should.have.property('ok').eql(1);
-                    // res.body.article.should.have.property('n').eql(1);
                 done();
               });
         });

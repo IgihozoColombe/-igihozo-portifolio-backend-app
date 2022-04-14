@@ -35,7 +35,7 @@ router.get('/welcome',(req,res)=>{
 
 /**
  * @swagger
- * /:
+ * /article:
  *  post:
  *   summary: Register article
  *   description: create a new article
@@ -53,7 +53,74 @@ router.get('/welcome',(req,res)=>{
  *     description: article created successfully
  *    500: 
  *     description: There is an error in creating the article
+*  get:
+*    summary: Lists all the articles
+*    tags: [Article]
+*    responses:
+*     "200":
+*       description: The list of articles.
+*       content:
+*        application/json:
+*         schema:
+*          $ref: '#/definitions/Article'
+* /article/{id}:
+*  get:
+*    summary: Gets a article by id
+*    tags: [Article]
+*    parameters:
+*         in: path
+*         name: id
+*         schema:
+*          type: integer
+*         required: true
+*         description: The article id
+*    responses:
+*     200:
+*      description: The list of articles.
+*     content:
+*      application/json:
+*       schema:
+*        $ref: '#/components/schemas/Article'
+*     404:
+*      description: article not found.
+*  put:
+*   summary: Updates a article
+*   tags: [Article]
+*   parameters:
+*       - in: path
+*         name: id
+*         schema:
+*          type: integer
+*         required: true
+*         description: The article id
+*   requestBody:
+*    required: true
+*    content:
+*     application/json:
+*      schema:
+*       $ref: '#/components/schemas/Article'
+*   responses:
+*    204:
+*     description: Update was successful.
+*    404:
+*     description: article not found.
+*  delete:
+*   summary: Deletes a article by id
+*   tags: [Articles]
+*   parameters:
+*       - in: path
+*         name: id
+*         schema:
+*          type: integer
+*         required: true
+*         description: The article id
+*   responses:
+*    204:
+*     description: Delete was successful.
+*    404:
+*     description: article not found.
  */
+
 
 
 router.post("/", upload.single("image"), async (req, res) => {
@@ -70,7 +137,7 @@ router.post("/", upload.single("image"), async (req, res) => {
      
     });
     await article.save();
-    res.json({message: "Book successfully added!", article });
+    res.json(article);
  
   } catch (err) {
     console.log(err);
@@ -107,7 +174,7 @@ router.post("/", upload.single("image"), async (req, res) => {
         console.log(err);
       }});
 
-      router.put("/:id", upload.single("image"),requireLogin,async (req, res) => {
+      router.put("/:id", upload.single("image"),async (req, res) => {
         try {
           const {error} = articleCreation(req.body)
           if(error) return res.send(error.details[0].message).status(400)

@@ -6,14 +6,15 @@ const cors=require('cors')
 const PORT = process.env.PORT || 5000
 const URL = "mongodb://0.0.0.0:27017/articles";
 // mongodb+srv://marie:<password>@cluster0.4keie.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+const host = process.env.NODE_ENV !== 'production' ? process.env.PROD_HOST : `localhost:${PORT}`
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi= require('swagger-ui-express')
 const swaggerOptions= {
     swaggerDefinition: {
         info:{
-            title:'Online Examination API',
+            title:'article API',
             version:'1.0.0',
-            description:'Student Api for online examination management system',
+            description:'This is the article API documentation for portifolio',
 
         },
         schemes: [process.env.NODE_ENV === 'production' ? 'https' : 'http'],
