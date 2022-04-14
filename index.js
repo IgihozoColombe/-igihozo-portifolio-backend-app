@@ -40,7 +40,7 @@ if(process.env.NODE_ENV=="production"){
     })
 }
 
-app.listen(PORT,()=>{
+module.exports=app.listen(PORT,()=>{
     console.log("server is running on",PORT)
 })
 

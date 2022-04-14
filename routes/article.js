@@ -9,7 +9,7 @@ router.get('/welcome',(req,res)=>{
   res.send('This is a welcome page.Please welcome to our Application')
 })
 
-router.post("/create", upload.single("image"),requireLogin, async (req, res) => {
+router.post("/create", upload.single("image"), async (req, res) => {
   try {
     const {error} = articleCreation(req.body)
     if(error) return res.send(error.details[0].message).status(400)
