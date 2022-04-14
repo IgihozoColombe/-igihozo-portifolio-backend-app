@@ -6,7 +6,31 @@ const cors=require('cors')
 const PORT = process.env.PORT || 5000
 const URL = "mongodb://0.0.0.0:27017/articles";
 // mongodb+srv://marie:<password>@cluster0.4keie.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUi= require('swagger-ui-express')
+const swaggerOptions= {
+    swaggerDefinition: {
+        info:{
+            title:'Online Examination API',
+            version:'1.0.0',
+            description:'Student Api for online examination management system',
 
+        },
+        schemes: [process.env.NODE_ENV === 'production' ? 'https' : 'http'],
+        host: host,
+        basePath: "/",
+        contact:{
+            name:"Igihozo Colombe",
+            url:"igihozo.com",
+            email:"nyiturikimarie1@gmail.com"
+
+        },
+    },
+    apis: ["./routes/*.js"]
+}
+
+const swaggerDocs =swaggerJSDoc(swaggerOptions)
+app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerDocs))
 mongoose.connect(URL,{
     useNewUrlParser:true,
     useUnifiedTopology: true,

@@ -11,72 +11,48 @@ router.get('/welcome',(req,res)=>{
 /**
  * @swagger
  * definitions:
- *  Students: 
+ *  Article: 
  *    type: object  
  *    properties:
  * 
- *      Admin:
- *       type: boolean
- *       description: checking if the user is the admin
- *       example: 'true'
- *      Firstname:
+ *      title:
  *        type: string
- *        description: The firstname  of the students
- *        example: 'colombe'
- *      Lastname:
+ *        description: The title  of the article
+ *        example: 'post1'
+ *      body:
  *        type: string
- *        description: The lastname  of the students
- *        example: 'igihozo'
- *      Email:
+ *        description: The body  of the article
+ *        example: 'this is post 1'
+ *      status:
  *        type: string
- *        description: The email  of the students
+ *        description: The status  of the article
  *        example: 'igihozocolombe@gmail.com'
- *      Gender:
+ *      image:
  *        type: string
- *        description: The gender  of the students
+ *        description: The image  of the article
  *        example: 'female'
- *      Location: 
- *        type: string
- *        description: The Location  of the students
- *        example: 'Muhanga'
- *      ClassName:
- *        type: string
- *        description: The className  of the students
- *        example: '1C'
- *      username:
- *        type: string
- *        description: The username  of the students
- *        example: 'marie'
- *      password:
- *        type: string
- *        description: The password  of the students
- *        example: 'abanabeza'
- *      Category:
- *        type: string
- *        description: The category  of the students
- *        example: 'normal'
  */
 
 /**
  * @swagger
- * /register:
+ * /:
  *  post:
- *   summary: Register students
- *   description: create a new students
+ *   summary: Register article
+ *   description: create a new article
  *   parameters:
  *       - in: body
- *         name: student
+ *         name: article
  * 
  *   requestBody:
  *    content: 
  *     application/json:
  *      schema: 
- *       $ref: '#/definitions/Students'
+ *       $ref: '#/definitions/Article'
  *   responses:
  *    200: 
- *     description: student created successfully
+ *     description: article created successfully
  *    500: 
- *     description: There is an error in creating the student
+ *     description: There is an error in creating the article
  */
 
 
