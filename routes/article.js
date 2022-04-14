@@ -8,8 +8,122 @@ const requireLogin = require('../middleware/requireLogin')
 router.get('/welcome',(req,res)=>{
   res.send('This is a welcome page.Please welcome to our Application')
 })
+/**
+ * @swagger
+ * definitions:
+ *  Article: 
+ *    type: object  
+ *    properties:
+ * 
+ *      title:
+ *        type: string
+ *        description: The title  of the article
+ *        example: 'post1'
+ *      body:
+ *        type: string
+ *        description: The body  of the article
+ *        example: 'this is post 1'
+ *      status:
+ *        type: string
+ *        description: The status  of the article
+ *        example: 'igihozocolombe@gmail.com'
+ *      image:
+ *        type: string
+ *        description: The image  of the article
+ *        example: 'female'
+ */
 
-router.post("/create", upload.single("image"),requireLogin, async (req, res) => {
+/**
+ * @swagger
+ * /article:
+ *  post:
+ *   summary: Register article
+ *   description: create a new article
+ *   parameters:
+ *       - in: body
+ *         name: article
+ * 
+ *   requestBody:
+ *    content: 
+ *     application/json:
+ *      schema: 
+ *       $ref: '#/definitions/Article'
+ *   responses:
+ *    200: 
+ *     description: article created successfully
+ *    500: 
+ *     description: There is an error in creating the article
+*  get:
+*    summary: Lists all the articles
+*    tags: [Article]
+*    responses:
+*     "200":
+*       description: The list of articles.
+*       content:
+*        application/json:
+*         schema:
+*          $ref: '#/definitions/Article'
+* /article/{id}:
+*  get:
+*    summary: Gets a article by id
+*    tags: [Article]
+*    parameters:
+*         in: path
+*         name: id
+*         schema:
+*          type: integer
+*         required: true
+*         description: The article id
+*    responses:
+*     200:
+*      description: The list of articles.
+*     content:
+*      application/json:
+*       schema:
+*        $ref: '#/components/schemas/Article'
+*     404:
+*      description: article not found.
+*  put:
+*   summary: Updates a article
+*   tags: [Article]
+*   parameters:
+*       - in: path
+*         name: id
+*         schema:
+*          type: integer
+*         required: true
+*         description: The article id
+*   requestBody:
+*    required: true
+*    content:
+*     application/json:
+*      schema:
+*       $ref: '#/components/schemas/Article'
+*   responses:
+*    204:
+*     description: Update was successful.
+*    404:
+*     description: article not found.
+*  delete:
+*   summary: Deletes a article by id
+*   tags: [Articles]
+*   parameters:
+*       - in: path
+*         name: id
+*         schema:
+*          type: integer
+*         required: true
+*         description: The article id
+*   responses:
+*    204:
+*     description: Delete was successful.
+*    404:
+*     description: article not found.
+ */
+
+
+
+router.post("/", upload.single("image"), async (req, res) => {
   try {
     const {error} = articleCreation(req.body)
     if(error) return res.send(error.details[0].message).status(400)
@@ -54,13 +168,16 @@ router.post("/create", upload.single("image"),requireLogin, async (req, res) => 
         await cloudinary.uploader.destroy(article.cloudinary_id);
         
         await article.remove();
-        res.json(article);
+        res.json(article).status(200);
+        
       } catch (err) {
         console.log(err);
       }});
 
-      router.put("/:id", upload.single("image"),requireLogin,async (req, res) => {
+      router.put("/:id", upload.single("image"),async (req, res) => {
         try {
+          const {error} = articleCreation(req.body)
+          if(error) return res.send(error.details[0].message).status(400)
           let article = await Article.findById(req.params.id);
           await cloudinary.uploader.destroy(article.cloudinary_id);
           const result = await cloudinary.uploader.upload(req.file.path);
@@ -78,8 +195,10 @@ router.post("/create", upload.single("image"),requireLogin, async (req, res) => 
         } catch (err) {
           console.log(err);
         }});
-        router.put('/like',requireLogin,(req,res)=>{
-          Article.findByIdAndUpdate(req.body.articleId,{
+
+
+        router.put('/like/:id',requireLogin,(req,res)=>{
+          Article.findByIdAndUpdate(req.params.id,{
               $push:{likes:req.user._id}
           },{
               new:true
@@ -93,8 +212,8 @@ router.post("/create", upload.single("image"),requireLogin, async (req, res) => 
       })
       
       
-      router.put('/unlike',requireLogin,(req,res)=>{
-          Article.findByIdAndUpdate(req.body.articleId,{
+      router.put('/unlike/:id',requireLogin,(req,res)=>{
+          Article.findByIdAndUpdate(req.params.id,{
               $pull:{likes:req.user._id}
           },{
               new:true
@@ -108,17 +227,17 @@ router.post("/create", upload.single("image"),requireLogin, async (req, res) => 
       })
       
       
-      router.put('/comment',requireLogin,(req,res)=>{
+      router.put('/comment/:id',requireLogin,(req,res)=>{
           const comment = {
               text:req.body.text,
               postedBy:req.user._id
           }
-          Article.findByIdAndUpdate(req.body.articleId,{
+          Article.findByIdAndUpdate(req.params.id,{
               $push:{comments:comment}
           },{
               new:true
           })
-          console.log(postedBy)
+    
           .populate("comments.postedBy","_id name")
           .populate("postedBy","_id name")
           .exec((err,result)=>{
@@ -126,9 +245,11 @@ router.post("/create", upload.single("image"),requireLogin, async (req, res) => 
                   return res.status(422).json({error:err})
               }else{
                   res.json(result)
+                      
               }
           })
       })
+      
         function articleCreation(req){
           const Schema = Joi.object({
             title:Joi.string().max(20).min(8).required(),

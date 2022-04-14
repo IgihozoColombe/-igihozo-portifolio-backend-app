@@ -6,7 +6,32 @@ const cors=require('cors')
 const PORT = process.env.PORT || 5000
 const URL = "mongodb://0.0.0.0:27017/articles";
 // mongodb+srv://marie:<password>@cluster0.4keie.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+const host = process.env.NODE_ENV !== 'production' ? process.env.PROD_HOST : `localhost:${PORT}`
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUi= require('swagger-ui-express')
+const swaggerOptions= {
+    swaggerDefinition: {
+        info:{
+            title:'article API',
+            version:'1.0.0',
+            description:'This is the article API documentation for portifolio',
 
+        },
+        schemes: [process.env.NODE_ENV === 'production' ? 'https' : 'http'],
+        host: host,
+        basePath: "/",
+        contact:{
+            name:"Igihozo Colombe",
+            url:"igihozo.com",
+            email:"nyiturikimarie1@gmail.com"
+
+        },
+    },
+    apis: ["./routes/*.js"]
+}
+
+const swaggerDocs =swaggerJSDoc(swaggerOptions)
+app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerDocs))
 mongoose.connect(URL,{
     useNewUrlParser:true,
     useUnifiedTopology: true,
@@ -40,7 +65,7 @@ if(process.env.NODE_ENV=="production"){
     })
 }
 
-app.listen(PORT,()=>{
+module.exports=app.listen(PORT,()=>{
     console.log("server is running on",PORT)
 })
 

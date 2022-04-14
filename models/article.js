@@ -5,12 +5,6 @@ const articleSchema = new mongoose.Schema({
     type: String,
 	required:true
   },
-  avatar: {
-    type: String,
-  },
-  cloudinary_id: {
-    type: String,
-  },
     body:{
         type:String,
         required:true
