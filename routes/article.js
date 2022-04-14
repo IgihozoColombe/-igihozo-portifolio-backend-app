@@ -8,8 +8,79 @@ const requireLogin = require('../middleware/requireLogin')
 router.get('/welcome',(req,res)=>{
   res.send('This is a welcome page.Please welcome to our Application')
 })
+/**
+ * @swagger
+ * definitions:
+ *  Students: 
+ *    type: object  
+ *    properties:
+ * 
+ *      Admin:
+ *       type: boolean
+ *       description: checking if the user is the admin
+ *       example: 'true'
+ *      Firstname:
+ *        type: string
+ *        description: The firstname  of the students
+ *        example: 'colombe'
+ *      Lastname:
+ *        type: string
+ *        description: The lastname  of the students
+ *        example: 'igihozo'
+ *      Email:
+ *        type: string
+ *        description: The email  of the students
+ *        example: 'igihozocolombe@gmail.com'
+ *      Gender:
+ *        type: string
+ *        description: The gender  of the students
+ *        example: 'female'
+ *      Location: 
+ *        type: string
+ *        description: The Location  of the students
+ *        example: 'Muhanga'
+ *      ClassName:
+ *        type: string
+ *        description: The className  of the students
+ *        example: '1C'
+ *      username:
+ *        type: string
+ *        description: The username  of the students
+ *        example: 'marie'
+ *      password:
+ *        type: string
+ *        description: The password  of the students
+ *        example: 'abanabeza'
+ *      Category:
+ *        type: string
+ *        description: The category  of the students
+ *        example: 'normal'
+ */
 
-router.post("/create", upload.single("image"), async (req, res) => {
+/**
+ * @swagger
+ * /register:
+ *  post:
+ *   summary: Register students
+ *   description: create a new students
+ *   parameters:
+ *       - in: body
+ *         name: student
+ * 
+ *   requestBody:
+ *    content: 
+ *     application/json:
+ *      schema: 
+ *       $ref: '#/definitions/Students'
+ *   responses:
+ *    200: 
+ *     description: student created successfully
+ *    500: 
+ *     description: There is an error in creating the student
+ */
+
+
+router.post("/", upload.single("image"), async (req, res) => {
   try {
     const {error} = articleCreation(req.body)
     if(error) return res.send(error.details[0].message).status(400)
@@ -23,7 +94,7 @@ router.post("/create", upload.single("image"), async (req, res) => {
      
     });
     await article.save();
-    res.json(article);
+    res.json({message: "Book successfully added!", article });
  
   } catch (err) {
     console.log(err);
@@ -54,7 +125,8 @@ router.post("/create", upload.single("image"), async (req, res) => {
         await cloudinary.uploader.destroy(article.cloudinary_id);
         
         await article.remove();
-        res.json(article);
+        res.json(article).status(200);
+        
       } catch (err) {
         console.log(err);
       }});
