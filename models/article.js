@@ -13,6 +13,12 @@ const articleSchema = new mongoose.Schema({
       type:String,
       required:true
   },
+  avatar: {
+    type: String,
+  },
+  cloudinary_id: {
+    type: String,
+  },
   likes:[{type:ObjectId,ref:"User"}],
 
   comments:[{

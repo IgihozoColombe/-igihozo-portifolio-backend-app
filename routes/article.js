@@ -18,18 +18,22 @@ router.get('/welcome',(req,res)=>{
  *      title:
  *        type: string
  *        description: The title  of the article
+ *        required: true
  *        example: 'post1'
  *      body:
  *        type: string
  *        description: The body  of the article
+ *        required: true
  *        example: 'this is post 1'
  *      status:
  *        type: string
  *        description: The status  of the article
+ *        required: true
  *        example: 'igihozocolombe@gmail.com'
  *      image:
  *        type: string
  *        description: The image  of the article
+ *        required: false
  *        example: 'female'
  */
 
@@ -45,7 +49,7 @@ router.get('/welcome',(req,res)=>{
  * 
  *   requestBody:
  *    content: 
- *     application/json:
+ *      application/json:
  *      schema: 
  *       $ref: '#/definitions/Article'
  *   responses:
@@ -65,27 +69,8 @@ router.get('/welcome',(req,res)=>{
 *          $ref: '#/definitions/Article'
 * /article/{id}:
 *  get:
-*    summary: Gets a article by id
-*    tags: [Article]
-*    parameters:
-*         in: path
-*         name: id
-*         schema:
-*          type: integer
-*         required: true
-*         description: The article id
-*    responses:
-*     200:
-*      description: The list of articles.
-*     content:
-*      application/json:
-*       schema:
-*        $ref: '#/components/schemas/Article'
-*     404:
-*      description: article not found.
-*  put:
-*   summary: Updates a article
-*   tags: [Article]
+*   summary: show a article by id
+*   tags: [Articles]
 *   parameters:
 *       - in: path
 *         name: id
@@ -93,17 +78,33 @@ router.get('/welcome',(req,res)=>{
 *          type: integer
 *         required: true
 *         description: The article id
-*   requestBody:
-*    required: true
-*    content:
-*     application/json:
-*      schema:
-*       $ref: '#/components/schemas/Article'
 *   responses:
 *    204:
-*     description: Update was successful.
+*     description: Select was successful.
 *    404:
 *     description: article not found.
+*  put:
+*    summary: update all the articles
+*    tags: [Articles]
+*    parameters:
+*        - name: id
+*          in: path
+*          description: 'ID of the book to modify'
+*          required: true
+*          schema:
+*          type: string
+*    requestBody:
+*         description: New details of the Article to be modified
+*         required: true
+*         content:
+*          application/json:
+*           schema:
+*            $ref: '#/definitions/Article'    
+*      responses:
+*       200:
+*        description: 'Article successfully updated'
+*       404:
+*        description: 'Article with the requested ID not found'
 *  delete:
 *   summary: Deletes a article by id
 *   tags: [Articles]
