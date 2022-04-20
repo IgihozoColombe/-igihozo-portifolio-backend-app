@@ -46,12 +46,21 @@ router.get('/welcome',(req,res)=>{
  *   parameters:
  *       - in: body
  *         name: article
+ *       - in: formData
+ *         name: article
+ *         type: file
  * 
  *   requestBody:
  *    content: 
- *      application/json:
+ *      multipart/form-data:
  *      schema: 
- *       $ref: '#/definitions/Article'
+ *        type: object
+ *        properties: 
+ *          id:
+              type: string
+              format: uuid
+            title:
+              type: string  
  *   responses:
  *    200: 
  *     description: article created successfully
@@ -84,27 +93,27 @@ router.get('/welcome',(req,res)=>{
 *    404:
 *     description: article not found.
 *  put:
-*    summary: update all the articles
-*    tags: [Articles]
-*    parameters:
-*        - name: id
-*          in: path
-*          description: 'ID of the book to modify'
-*          required: true
-*          schema:
-*          type: string
-*    requestBody:
-*         description: New details of the Article to be modified
+*   summary: update all the articles
+*   tags: [Articles]
+*   parameters:
+*       - name: id
+*         in: path
+*         description: 'ID of thean  Articles to modify'
 *         required: true
-*         content:
-*          application/json:
-*           schema:
-*            $ref: '#/definitions/Article'    
-*      responses:
-*       200:
-*        description: 'Article successfully updated'
-*       404:
-*        description: 'Article with the requested ID not found'
+*         schema:
+*         type: string
+*   requestBody:
+*        description: New details of the Article to be modified
+*        required: true
+*        content:
+*         application/json:
+*          schema:
+*           $ref: '#/definitions/Article'    
+*   responses:
+*     200:
+*      description: 'Article successfully updated'
+*     404:
+*      description: 'Article with the requested ID not found'
 *  delete:
 *   summary: Deletes a article by id
 *   tags: [Articles]
