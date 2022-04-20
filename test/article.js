@@ -27,7 +27,7 @@ describe('Articles', () => {
             });
       });
   });
-  describe('/POST article', () => {
+  describe('/POST book', () => {
       it('it should not POST a book without pages field', (done) => {
           let article = {
               title: "The Lord of the Rings",
@@ -44,7 +44,7 @@ describe('Articles', () => {
               done();
             });
       });
-      it('it should POST a article ', (done) => {
+      it('it should POST a book ', (done) => {
           let article = {
               title: "The Lord of the Rings",
               body: "J.R.R. Tolkien",
@@ -56,9 +56,9 @@ describe('Articles', () => {
             .end((err, res) => {
                   res.should.have.status(200);
                   res.body.should.be.a('object');
-                //   res.body.article.should.have.property('title');
-                //   res.body.article.should.have.property('body');
-                //   res.body.article.should.have.property('status');
+                //   res.body.book.should.have.property('title');
+                //   res.body.book.should.have.property('body');
+                //   res.body.book.should.have.property('status');
               done();
             });
       });
@@ -102,7 +102,7 @@ describe('Articles', () => {
         });
     });
 });
-describe('/DELETE/:id article', () => {
+describe('/DELETE/:id book', () => {
     it('it should DELETE a article given the id', (done) => {
         let article = new Article({title: "The Chronicles of Narnia", body: "J.R.R. Tolkien", status: "pending"})
         article.save((err, article) => {
@@ -117,5 +117,3 @@ describe('/DELETE/:id article', () => {
     });
 });
 });
-
-
