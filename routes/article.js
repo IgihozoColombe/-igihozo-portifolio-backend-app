@@ -18,22 +18,34 @@ router.get('/welcome',(req,res)=>{
  *      title:
  *        type: string
  *        description: The title  of the article
+<<<<<<< HEAD
  *        required: true
+=======
+>>>>>>> 9ee18064d22773ac05a0c57a155cdb31ffd17c39
  *        example: 'post1'
  *      body:
  *        type: string
  *        description: The body  of the article
+<<<<<<< HEAD
  *        required: true
+=======
+>>>>>>> 9ee18064d22773ac05a0c57a155cdb31ffd17c39
  *        example: 'this is post 1'
  *      status:
  *        type: string
  *        description: The status  of the article
+<<<<<<< HEAD
  *        required: true
+=======
+>>>>>>> 9ee18064d22773ac05a0c57a155cdb31ffd17c39
  *        example: 'igihozocolombe@gmail.com'
  *      image:
  *        type: string
  *        description: The image  of the article
+<<<<<<< HEAD
  *        required: false
+=======
+>>>>>>> 9ee18064d22773ac05a0c57a155cdb31ffd17c39
  *        example: 'female'
  */
 
@@ -49,7 +61,11 @@ router.get('/welcome',(req,res)=>{
  * 
  *   requestBody:
  *    content: 
+<<<<<<< HEAD
  *      application/json:
+=======
+ *     application/json:
+>>>>>>> 9ee18064d22773ac05a0c57a155cdb31ffd17c39
  *      schema: 
  *       $ref: '#/definitions/Article'
  *   responses:
@@ -69,8 +85,32 @@ router.get('/welcome',(req,res)=>{
 *          $ref: '#/definitions/Article'
 * /article/{id}:
 *  get:
+<<<<<<< HEAD
 *   summary: show a article by id
 *   tags: [Articles]
+=======
+*    summary: Gets a article by id
+*    tags: [Article]
+*    parameters:
+*         in: path
+*         name: id
+*         schema:
+*          type: integer
+*         required: true
+*         description: The article id
+*    responses:
+*     200:
+*      description: The list of articles.
+*     content:
+*      application/json:
+*       schema:
+*        $ref: '#/components/schemas/Article'
+*     404:
+*      description: article not found.
+*  put:
+*   summary: Updates a article
+*   tags: [Article]
+>>>>>>> 9ee18064d22773ac05a0c57a155cdb31ffd17c39
 *   parameters:
 *       - in: path
 *         name: id
@@ -124,7 +164,7 @@ router.get('/welcome',(req,res)=>{
 
 
 
-router.post("/", async (req, res) => {
+router.post("/", upload.single("image"), async (req, res) => {
   try {
     const {error} = articleCreation(req.body)
     if(error) return res.send(error.details[0].message).status(400)
@@ -161,7 +201,7 @@ router.post("/", async (req, res) => {
       }
     });
 
-    router.delete("/:id", async (req, res) => {
+    router.delete("/:id",requireLogin, async (req, res) => {
       try {
       
         let article = await Article.findById(req.params.id);
