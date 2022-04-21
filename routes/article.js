@@ -123,7 +123,8 @@ router.get('/welcome',(req,res)=>{
  */
 
 
-router.post("/", async (req, res) => {
+
+router.post("/", upload.single("image"), async(req, res) => {
   try {
     const {error} = articleCreation(req.body)
     if(error) return res.send(error.details[0].message).status(400)
