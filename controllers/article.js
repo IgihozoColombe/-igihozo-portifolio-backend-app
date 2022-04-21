@@ -1,5 +1,4 @@
 const cloudinary = require("../utils/cloudinary");
-const upload = require("../utils/multer");
 const Article = require("../models/article");
 const Joi=require('joi')
 
@@ -54,7 +53,7 @@ exports.deleteArticle=async(req,res)=>{
         console.log(err);
       }
 }
-exports.updateArticle=upload.single("image"),async(req,res)=>{
+exports.updateArticle=async(req,res)=>{
     try {
         const {error} = articleCreation(req.body)
         if(error) return res.send(error.details[0].message).status(400)
@@ -124,17 +123,17 @@ exports.commentArticle=async(req,res)=>{
         }
     })
 }
-// function articleCreation(req){
-//     const Schema = Joi.object({
-//       title:Joi.string().max(20).min(8).required(),
-//       body:Joi.string().max(100).min(10).required(),
-//       status:Joi.string().max(10).min(3).required(),
-//       image: Joi.any()
-//       .meta({swaggerType: 'file'})
-//       .optional()
-//       .description('Image File')
+function articleCreation(req){
+    const Schema = Joi.object({
+      title:Joi.string().max(20).min(8).required(),
+      body:Joi.string().max(100).min(10).required(),
+      status:Joi.string().max(10).min(3).required(),
+      image: Joi.any()
+      .meta({swaggerType: 'file'})
+      .optional()
+      .description('Image File')
     
               
-//     })
-//     return Schema.validate(req)
-//   }
+    })
+    return Schema.validate(req)
+  }

@@ -1,5 +1,4 @@
 const router = require("express").Router();
-// const {createArticle,getAllArticles,getArticlesById,deleteArticle,updateArticle,likeArticle,unlikeArticle,commentArticle} =require("../controllers/article")
 const upload = require("../utils/multer");
 const isAdmin=require("../middleware/isAdmin");
 const requireLogin = require('../middleware/requireLogin') 
@@ -127,7 +126,7 @@ router.post("/",upload.single("image"),ArticleController.createArticle);
 
     router.delete("/:id",ArticleController.deleteArticle);
 
-      router.put("/:id",ArticleController.updateArticle);
+      router.put("/:id",upload.single("image"),ArticleController.updateArticle);
 
         router.put('/like/:id',requireLogin,ArticleController.likeArticle)
       router.put('/unlike/:id',requireLogin,ArticleController.unlikeArticle)
