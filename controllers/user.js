@@ -29,17 +29,7 @@ exports.createUser=async(req,res)=>{
         res.status(200).send("The user was saved succesivelly")
     }
 }
-exports.getAllUsers=async(req,res)=>{
-    User.find() 
-    .then((users)=>{
-        res.json({users})
-        console.log(users);
-        console.log(savedUser);
 
-    }).catch(err=>{
-        console.log(err)
-    })
-}
 exports.login=async(req,res)=>{
     const {email,password} = req.body
     if(!email || !password){
@@ -75,7 +65,16 @@ exports.login=async(req,res)=>{
         })
     })
 }
+exports.getAllUsers=async(req,res)=>{
+    User.find() 
+    .then((users)=>{
+        res.json({users})
+        console.log(users);
 
+    }).catch(err=>{
+        console.log(err)
+    })
+}
 function loginvalidation(req){
     const Schema = Joi.object({
         email:Joi.string().email().required(),
