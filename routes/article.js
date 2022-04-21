@@ -38,20 +38,21 @@ const  ArticleController =require("../controllers/article")
  * /article:
  *  post:
  *   summary: Register article
- *   consumes:
- *     - multipart/form-data
  *   description: create a new article
  *   parameters:
  *       - in: body
  *         name: article
  *       - in: formData   
- *         name: file
+ *         name: image
  *         description: The uploaded file data
  *         required: true
  *         type: file
  *   requestBody:
  *    content: 
  *      application/json:
+ *      schema: 
+ *       $ref: '#/definitions/Article'
+ *      multipart/form-data
  *      schema: 
  *       $ref: '#/definitions/Article'
  *   responses:
