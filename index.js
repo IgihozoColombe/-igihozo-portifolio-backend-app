@@ -13,7 +13,7 @@ const swaggerOptions= {
     swaggerDefinition: {
         info:{
             title:'article API',
-            version:'1.0.0',
+            version:'3.0.8',
             description:'This is the article API documentation for portifolio',
 
         },
