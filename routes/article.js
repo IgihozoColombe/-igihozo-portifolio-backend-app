@@ -120,7 +120,7 @@ const  ArticleController =require("../controllers/article")
 
 
 
-router.post("/",ArticleController.createArticle);
+router.post("/",upload.single("image"),ArticleController.createArticle);
   router.get("/",ArticleController.getAllArticles);
 
     router.get("/:id",ArticleController.getArticlesById);

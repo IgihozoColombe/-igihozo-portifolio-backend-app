@@ -3,7 +3,7 @@ const upload = require("../utils/multer");
 const Article = require("../models/article");
 const Joi=require('joi')
 
-exports.createArticle=upload.single("image"),async(req,res)=>{
+exports.createArticle=async(req,res)=>{
     try {
         const {error} = articleCreation(req.body)
         if(error) return res.send(error.details[0].message).status(400)
