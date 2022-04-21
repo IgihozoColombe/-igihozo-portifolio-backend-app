@@ -18,22 +18,18 @@ router.get('/welcome',(req,res)=>{
  *      title:
  *        type: string
  *        description: The title  of the article
- *        required: true
  *        example: 'post1'
  *      body:
  *        type: string
  *        description: The body  of the article
- *        required: true
  *        example: 'this is post 1'
  *      status:
  *        type: string
  *        description: The status  of the article
- *        required: true
  *        example: 'igihozocolombe@gmail.com'
  *      image:
  *        type: string
  *        description: The image  of the article
- *        required: false
  *        example: 'female'
  */
 
@@ -47,20 +43,15 @@ router.get('/welcome',(req,res)=>{
  *       - in: body
  *         name: article
  *       - in: formData
- *         name: article
+ *         name: upfile
  *         type: file
- * 
+ *         required: true
+ *         description: The article to upload.
  *   requestBody:
  *    content: 
  *      multipart/form-data:
  *      schema: 
- *        type: object
- *        properties: 
- *          id:
-              type: string
-              format: uuid
-            title:
-              type: string  
+ *       $ref: '#/definitions/Article'
  *   responses:
  *    200: 
  *     description: article created successfully
@@ -130,7 +121,6 @@ router.get('/welcome',(req,res)=>{
 *    404:
 *     description: article not found.
  */
-
 
 
 router.post("/", async (req, res) => {
