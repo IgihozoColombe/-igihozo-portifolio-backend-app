@@ -22,8 +22,7 @@ describe('User', () => {
               .end((err, res) => {
                     res.should.have.status(200);
                     res.should.be.json;
-                    // res.body.should.be.a('array');
-                    // res.body.length.should.be.eql(1);
+                    
                 done();
               });
         });
