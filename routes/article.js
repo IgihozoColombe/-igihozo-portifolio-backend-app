@@ -52,9 +52,6 @@ const  ArticleController =require("../controllers/article")
  *      application/json:
  *      schema: 
  *       $ref: '#/definitions/Article'
- *      multipart/form-data
- *      schema: 
- *       $ref: '#/definitions/Article'
  *   responses:
  *    200: 
  *     description: article created successfully
