@@ -124,14 +124,14 @@ const  ArticleController =require("../controllers/article")
 
 
 
-router.post("/",upload.single("image"),ArticleController.createArticle);
-  router.get("/",ArticleController.getAllArticles);
+router.post("/",requireLogin,upload.single("image"),ArticleController.createArticle);
+  router.get("/",requireLogin,ArticleController.getAllArticles);
 
-    router.get("/:id",ArticleController.getArticlesById);
+    router.get("/:id",requireLogin,ArticleController.getArticlesById);
 
-    router.delete("/:id",ArticleController.deleteArticle);
+    router.delete("/:id",requireLogin,ArticleController.deleteArticle);
 
-      router.put("/:id",upload.single("image"),ArticleController.updateArticle);
+      router.put("/:id",requireLogin,upload.single("image"),ArticleController.updateArticle);
 
         router.put('/like/:id',requireLogin,ArticleController.likeArticle)
       router.put('/unlike/:id',requireLogin,ArticleController.unlikeArticle)

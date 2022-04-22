@@ -30,11 +30,8 @@ describe('User', () => {
   describe('/POST user', () => {
       it('it should not login a user ', (done) => {
           let user = {
-             firstname:"Ineza",
-             lastname:"Gaella",
-             username:"ganza",
-             email:"ganza@gmail.com",
-             password:"abanabeza"
+            email:"ganza@gmail.com",
+            password:"abanabeza"
           }
             chai.request(server)
             .post('/user/signin')
@@ -65,8 +62,11 @@ describe('User', () => {
   describe('/POST user', () => {
     it('it should not POST a user ', (done) => {
         let user = {
-           email:"ganza@gmail.com",
-           password:"abanabeza"
+          firstname:"Ineza",
+          lastname:"Gaella",
+          username:"ganza",
+          email:"ganza@gmail.com",
+          password:"abanabeza"
         }
           chai.request(server)
           .post('/user/signup')

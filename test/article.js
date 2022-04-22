@@ -19,6 +19,7 @@ describe('Articles', () => {
       it('it should GET all the article', (done) => {
             chai.request(server)
             .get('/article')
+            .set('Authorization', 'JWT ' + token)
             .end((err, res) => {
                   res.should.have.status(200);
                   res.body.should.be.a('array');
@@ -111,6 +112,7 @@ describe('/DELETE/:id article', () => {
               .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
+                    
                 done();
               });
         });
