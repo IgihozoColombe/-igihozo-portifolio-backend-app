@@ -7,8 +7,8 @@ const JWT_SECRET = require('../key')
 const Joi=require('joi')
 
 exports.createUser=async(req,res)=>{
-    const {error} = validation(req.body)
-    if(error) return res.send(error.details[0].message).status(400)
+    // const {error} = validation(req.body)
+    // if(error) return res.send(error.details[0].message).status(400)
     let password=await req.body.password
     let salt=await bcrypt.genSalt(5)
     let hashedPassword=await bcrypt.hash(password,salt)
