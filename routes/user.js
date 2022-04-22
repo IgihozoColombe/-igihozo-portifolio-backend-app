@@ -83,7 +83,9 @@ const requireLogin = require('../middleware/requireLogin')
 *         schema:
 *          $ref: '#/definitions/Article'
  */
-
+router.get('/',(req,res) => {
+    res.send("welcome to my app")
+})
 router.post("/signup",UserController.createUser)
 router.post('/signin',UserController.login)
 router.get('/users',requireLogin,UserController.getAllUsers)
