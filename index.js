@@ -27,6 +27,20 @@ const swaggerOptions= {
 
         },
     },
+    components: {
+        securitySchemes: {
+          jwt: {
+            type: "http",
+            scheme: "bearer",
+            in: "header",
+            bearerFormat: "JWT"
+          },
+        }
+      },
+      security: [{
+        jwt: []
+      }],
+    swagger: "2.0",
     apis: ["./routes/*.js"]
 }
 

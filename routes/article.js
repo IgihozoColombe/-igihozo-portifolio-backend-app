@@ -60,6 +60,8 @@ const  ArticleController =require("../controllers/article")
 *  get:
 *    summary: Lists all the articles
 *    tags: [Article]
+*	   security:
+*	    - jwt: []
 *    responses:
 *     "200":
 *       description: The list of articles.
