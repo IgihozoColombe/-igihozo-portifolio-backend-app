@@ -5,8 +5,6 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const JWT_SECRET = require('../key')
 const Joi=require('joi')
-const loginvalidation=require('../validation/loginvalidation')
-const validation=require('../validation/loginvalidation')
 
 exports.createUser=async(req,res)=>{
     const {error} = validation(req.body)
@@ -77,4 +75,21 @@ exports.getAllUsers=async(req,res)=>{
         console.log(err)
     })
 }
+function loginvalidation(req){
+    const Schema = Joi.object({
+        email:Joi.string().email().required(),
+        password:Joi.string().min(8).max(15).required(true) 
+    })
+    return Schema.validate(req)
+  }
 
+function validation(req){
+    const Schema = Joi.object({
+        firstname:Joi.string().required(true).min(3).max(50),
+        lastname:Joi.string().required(true).min(3).max(50),
+        username:Joi.string().required(true).min(3).max(50),
+        email:Joi.string().email().required(),
+        password:Joi.string().min(8).max(15).required(true) 
+    })
+    return Schema.validate(req)
+  }

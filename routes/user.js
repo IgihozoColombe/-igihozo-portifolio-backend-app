@@ -33,6 +33,24 @@ const UserController=require("../controllers/user")
 
 /**
  * @swagger
+* /user/signin:
+*  post:
+ *   summary: login
+ *   description: signin a User
+ *   parameters:
+ *       - in: body
+ *         name: user
+ * 
+ *   requestBody:
+ *    content: 
+ *     application/json:
+ *      schema: 
+ *       $ref: '#/definitions/User'
+ *   responses:
+ *    200: 
+ *     description: User logged in successfully
+ *    500: 
+ *     description: There is an error in sign in the User
  * /user/signup:
  *  post:
  *   summary: Register User
@@ -51,6 +69,17 @@ const UserController=require("../controllers/user")
  *     description: User created successfully
  *    500: 
  *     description: There is an error in creating the User
+* /user/users:
+*  get:
+*    summary: Lists all the user
+*    tags: [User]
+*    responses:
+*     "200":
+*       description: The list of user.
+*       content:
+*        application/json:
+*         schema:
+*          $ref: '#/definitions/Article'
  */
 
 router.post("/signup",UserController.createUser)
