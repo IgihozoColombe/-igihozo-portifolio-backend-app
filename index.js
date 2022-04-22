@@ -7,45 +7,36 @@ const PORT = process.env.PORT || 5000
 const URL = "mongodb://0.0.0.0:27017/articles";
 // mongodb+srv://marie:<password>@cluster0.4keie.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 const host = process.env.NODE_ENV !== 'production' ? process.env.PROD_HOST : `localhost:${PORT}`
-const swaggerJSDoc = require('swagger-jsdoc');
-const swaggerUi= require('swagger-ui-express')
-const swaggerOptions= {
-    swaggerDefinition: {
-        info:{
-            title:'article API',
-            version:'3.0.8',
-            description:'This is the article API documentation for portifolio',
-
-        },
-        schemes: [process.env.NODE_ENV === 'production' ? 'https' : 'http'],
-        host: host,
-        basePath: "/",
-        contact:{
-            name:"Igihozo Colombe",
-            url:"igihozo.com",
-            email:"nyiturikimarie1@gmail.com"
-
-        },
-    },
-    components: {
-        securitySchemes: {
-          jwt: {
-            type: "http",
-            scheme: "bearer",
-            in: "header",
-            bearerFormat: "JWT"
-          },
-        }
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUI= require('swagger-ui-express')
+const options = {
+    definition: {
+        openapi: '3.0.0',
+      info: {
+        title: "İlaç Takip Sistemi API",
+        version: "2.0.0",
+        description: "ITS API Swagger",
       },
-      security: [{
-        jwt: []
-      }],
-    swagger: "2.0",
+      components: {
+        securitySchemes: {
+            bearerAuth: {
+                type: "http",
+                scheme: "bearer",
+              },
+        },
+      },
+      security: [
+        {
+          bearerAuth: [],
+        },
+      ],
+    },
     apis: ["./routes/*.js"]
-}
+  };
+  const specs = swaggerJsDoc(options);
+  app.use("/swagger", swaggerUI.serve, swaggerUI.setup(specs));
 
-const swaggerDocs =swaggerJSDoc(swaggerOptions)
-app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerDocs))
+
 mongoose.connect(URL,{
     useNewUrlParser:true,
     useUnifiedTopology: true,
