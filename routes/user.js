@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const UserController=require("../controllers/user")
+const requireLogin = require('../middleware/requireLogin')
 
 /**
  * @swagger
@@ -84,7 +85,7 @@ const UserController=require("../controllers/user")
 
 router.post("/signup",UserController.createUser)
 router.post('/signin',UserController.login)
-router.get('/users',UserController.getAllUsers)
+router.get('/users',requireLogin,UserController.getAllUsers)
 
 module.exports=router
 
