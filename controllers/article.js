@@ -1,8 +1,7 @@
 const cloudinary = require("../utils/cloudinary");
 const Article = require("../models/article");
 const Joi=require('joi')
-
-
+const articleCreation=require("../validation/articlecreation")
 exports.createArticle=async(req,res)=>{
     try {
         const {error} = articleCreation(req.body)
@@ -124,17 +123,3 @@ exports.commentArticle=async(req,res)=>{
         }
     })
 }
-function articleCreation(req){
-    const Schema = Joi.object({
-      title:Joi.string().max(20).min(8).required(),
-      body:Joi.string().max(100).min(10).required(),
-      status:Joi.string().max(10).min(3).required(),
-      image: Joi.any()
-      .meta({swaggerType: 'file'})
-      .optional()
-      .description('Image File')
-    
-              
-    })
-    return Schema.validate(req)
-  }
