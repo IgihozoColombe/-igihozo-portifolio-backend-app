@@ -1,10 +1,10 @@
 const Query=require('../models/querries')
 const express = require('express')
 const mongoose = require('mongoose')
-const validation= require('../validation/validation')
+const queryValidation= require('../validation/query')
 
 exports.createQuery=async(req,res)=>{
-    const {error} = validation(req.body)
+    const {error} = queryValidation(req.body)
     if(error) return res.send(error.details[0].message).status(400)
     let newQuery=await new Query({
         name:req.body.name,

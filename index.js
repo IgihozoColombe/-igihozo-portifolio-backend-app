@@ -52,6 +52,7 @@ mongoose.connection.on('ecrror',(err)=>{
 mongoose.set('useFindAndModify',false);
 require('./models/article')
 require('./models/user')
+require('./models/querries')
 
 app.use(express.json())
 app.use(cors())
@@ -61,6 +62,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use('/user',require('./routes/user'))
 app.use('/article', require('./routes/article'))
+app.use('/query', require('./routes/queries'))
 
 if(process.env.NODE_ENV=="production"){
     app.use(express.static('client/build'))

@@ -7,88 +7,65 @@ const requireLogin = require('../middleware/requireLogin')
 /**
  * @swagger
  * definitions:
- *  User: 
+ *  Query: 
  *    type: object  
  *    properties:
  * 
- *      firstname:
+ *      name:
  *        type: string
- *        description: The firstname  of the students
+ *        description: The name  of the user
  *        example: 'colombe'
- *      lastname:
- *        type: string
- *        description: The lastname  of the students
- *        example: 'igihozo'
  *      email:
  *        type: string
- *        description: The email  of the students
- *        example: 'igihozocolombe@gmail.com'
- *      username:
+ *        description: The email  of the user
+ *        example: 'igihozo@gmail.com'
+ *      subject:
  *        type: string
- *        description: The username  of the students
- *        example: 'marie'
- *      password:
+ *        description: The subject  of the user
+ *        example: 'This is the subject'
+ *      message:
  *        type: string
- *        description: The password  of the students
- *        example: 'abanabeza'
+ *        description: The message  of the user
+ *        example: 'This is the message'
  */
 
 /**
  * @swagger
-* /user/signin:
+* /query/createQuery:
 *  post:
- *   summary: login
- *   description: signin a User
+ *   summary: create Query
+ *   description: create Query
  *   parameters:
  *       - in: body
- *         name: user
+ *         name: query
  * 
  *   requestBody:
  *    content: 
  *     application/json:
  *      schema: 
- *       $ref: '#/definitions/User'
+ *       $ref: '#/definitions/Query'
  *   responses:
  *    200: 
- *     description: User logged in successfully
+ *     description: query created successfully
  *    500: 
  *     description: There is an error in sign in the User
- * /user/signup:
- *  post:
- *   summary: Register User
- *   description: create a new User
- *   parameters:
- *       - in: body
- *         name: article
- * 
- *   requestBody:
- *    content: 
- *     application/json:
- *      schema: 
- *       $ref: '#/definitions/User'
- *   responses:
- *    200: 
- *     description: User created successfully
- *    500: 
- *     description: There is an error in creating the User
-* /user/users:
+* /query/getAllQueries:
 *  get:
-*    summary: Lists all the user
-*    tags: [User]
+*    summary: Lists all the query
+*    tags: [Query]
 *    responses:
 *     "200":
-*       description: The list of user.
+*       description: The list of query.
 *       content:
 *        application/json:
 *         schema:
-*          $ref: '#/definitions/Article'
+*          $ref: '#/definitions/Query'
  */
 router.get('/',(req,res) => {
     res.send("welcome to my app's queries")
 })
-router.post("/signup",QueriesController.createQuery)
-router.post('/signin',UserController.login)
-router.get('/users',requireLogin,UserController.getAllUsers)
+router.post("/createQuery",QueriesController.createQuery)
+router.get('/getAllQueries',QueriesController.createQuery)
 
 module.exports=router
 
