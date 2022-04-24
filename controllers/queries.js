@@ -21,7 +21,7 @@ exports.getAllQueries=async(req,res)=>{
     Query.find() 
     .then((query)=>{
         res.json({query})
-        console.log(query);
+       
 
     }).catch(err=>{
         console.log(err)

@@ -51,7 +51,20 @@ const  ArticleController =require("../controllers/article")
  *    content: 
  *      application/json:
  *      schema: 
- *       $ref: '#/definitions/Article'
+ *   requestBody:
+ *    content:
+ *      multipart/form-data:
+ *        schema:
+ *          type: object
+ *          properties:
+ *            Article:  
+*               $ref: '#/definitions/Article'
+ *            image:      
+ *              type: string
+ *              format: binary
+ *          required:
+ *            - Article
+ *            - image
  *   responses:
  *    200: 
  *     description: article created successfully
