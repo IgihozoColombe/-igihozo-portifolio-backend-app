@@ -48,17 +48,13 @@ const  ArticleController =require("../controllers/article")
  *         required: true
  *         type: file
  *   requestBody:
- *    content: 
- *      application/json:
- *      schema: 
- *   requestBody:
  *    content:
  *      multipart/form-data:
  *        schema:
  *          type: object
  *          properties:
  *            Article:  
-*               $ref: '#/definitions/Article'
+ *               $ref: '#/definitions/Article'
  *            image:      
  *              type: string
  *              format: binary
