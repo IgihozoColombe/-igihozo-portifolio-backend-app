@@ -158,10 +158,10 @@ router.get('/',(req,res) => {
 router.post("/signup",UserController.createUser)
 router.post('/signin',UserController.login)
 router.get('/users',UserController.getAllUsers)
-router.get('/resetPassword',requireLogin,UserController.resetPasswords)
-router.get('/updateUser',requireLogin,UserController.updateUser)
-router.get('/changePassword',UserController.changePassword)
-router.get('/logout',requireLogin,UserController.logout)
+router.put('/resetPassword',requireLogin,UserController.resetPasswords)
+router.put('/updateUser',requireLogin,UserController.updateUser)
+router.put('/changePassword',UserController.changePassword)
+router.post('/logout',requireLogin,UserController.logout)
 module.exports=router
 
 

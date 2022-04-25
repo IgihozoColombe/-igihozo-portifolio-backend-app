@@ -7,6 +7,7 @@ const JWT_SECRET = require('../key')
 const Joi=require('joi')
 const validation= require('../validation/validation')
 const loginvalidation=require('../validation/loginvalidation')
+const validateUpdate=require('../validation/changePasswordValidation')
 
 exports.createUser=async(req,res)=>{
     const {error} = validation(req.body)
