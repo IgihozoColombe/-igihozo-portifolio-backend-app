@@ -39,14 +39,6 @@ const  ArticleController =require("../controllers/article")
  *  post:
  *   summary: Register article
  *   description: create a new article
- *   parameters:
- *       - in: body
- *         name: article
- *       - in: formData   
- *         name: image
- *         description: The uploaded file data
- *         required: true
- *         type: file
  *   requestBody:
  *    content:
  *      multipart/form-data:
@@ -55,6 +47,15 @@ const  ArticleController =require("../controllers/article")
  *          properties:
  *            Article:  
  *               $ref: '#/definitions/Article'
+ *            title:      
+ *              type: string
+ *              format: binary
+ *            body:      
+ *              type: string
+ *              format: binary
+ *            status:      
+ *              type: string
+ *              format: binary
  *            image:      
  *              type: string
  *              format: binary
