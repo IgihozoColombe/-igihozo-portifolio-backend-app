@@ -81,15 +81,87 @@ const requireLogin = require('../middleware/requireLogin')
 *       content:
 *        application/json:
 *         schema:
-*          $ref: '#/definitions/Article'
+*          $ref: '#/definitions/User'
+* /user/updateUser:
+*  put:
+*   summary: update all  Users
+*   tags: [User]
+*   parameters:
+*       - name: id
+*         in: path
+*         description: 'ID of thean  User to modify'
+*         required: true
+*         schema:
+*         type: string
+*   requestBody:
+*        description: New details of the User to be modified
+*        required: true
+*        content:
+*         application/json:
+*          schema:
+*           $ref: '#/definitions/User'    
+*   responses:
+*     200:
+*      description: 'User successfully updated'
+*     404:
+*      description: 'User with the requested ID not found'
+* /user/resetPassword:
+*  put:
+*   summary: update all  Users
+*   tags: [User]
+*   parameters:
+*       - name: id
+*         in: path
+*         description: 'ID of thean  User to modify'
+*         required: true
+*         schema:
+*         type: string
+*   requestBody:
+*        description: New details of the User to be modified
+*        required: true
+*        content:
+*         application/json:
+*          schema:
+*           $ref: '#/definitions/User'    
+*   responses:
+*     200:
+*      description: 'User successfully updated'
+*     404:
+*      description: 'User with the requested ID not found'
+* /user/changePassword:
+*  put:
+*   summary: update all  Users
+*   tags: [User]
+*   parameters:
+*       - name: id
+*         in: path
+*         description: 'ID of thean  User to modify'
+*         required: true
+*         schema:
+*         type: string
+*   requestBody:
+*        description: New details of the User to be modified
+*        required: true
+*        content:
+*         application/json:
+*          schema:
+*           $ref: '#/definitions/User'    
+*   responses:
+*     200:
+*      description: 'User successfully updated'
+*     404:
+*      description: 'User with the requested ID not found'
  */
 router.get('/',(req,res) => {
     res.send("welcome to my app")
 })
 router.post("/signup",UserController.createUser)
 router.post('/signin',UserController.login)
-router.get('/users',requireLogin,UserController.getAllUsers)
-
+router.get('/users',UserController.getAllUsers)
+router.get('/resetPassword',requireLogin,UserController.resetPasswords)
+router.get('/updateUser',requireLogin,UserController.updateUser)
+router.get('/changePassword',UserController.changePassword)
+router.get('/logout',requireLogin,UserController.logout)
 module.exports=router
 
 
