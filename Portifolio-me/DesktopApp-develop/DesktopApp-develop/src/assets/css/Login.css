@@ -1,0 +1,16 @@
+.logo{
+    height:100px;
+    width:100px;
+    margin: auto;
+    display:flex;
+}
+input{
+    border: none;
+    outline: none;
+    width:100%;
+}
+input::placeholder{
+    font-size: 14px;
+    color: #000;
+    font-weight: lighter;
+}

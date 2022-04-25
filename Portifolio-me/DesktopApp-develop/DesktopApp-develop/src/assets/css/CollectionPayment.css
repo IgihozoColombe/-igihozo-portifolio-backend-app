@@ -1,0 +1,128 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap"); */
+
+
+
+
+.collection-header-wrapper {
+    display: flex;
+  }
+  .collection-header {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 39px;
+    color: #484848;
+  }
+
+  .collection-header-div {
+    background: #5c8c24;
+    box-shadow: 3px 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .collection-header-div p {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 13px;
+    margin-bottom: 0px !important;
+    padding-top: -10px !important;
+  
+  }
+
+  .PaymentWrapper {
+    background-color: #fff;
+  
+  }
+
+  .PaymentWrapper thead {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 16px;
+    color: #8e939d;
+  }
+
+
+  .PaymentWrapper tbody {
+    font-family: Ubuntu;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
+    color: #565b65;
+
+  }
+
+
+ .PaymentWrapper th,
+.PaymentWrapper td {
+  border: 2px solid #fff !important;
+}
+
+.PaymentWrapper tbody td:nth-child(2){
+  color: #5c8c24 !important;
+}
+
+/* g */
+
+
+
+.tab {
+  
+  background-color: #f1f1f1;
+}
+
+
+.tab button {
+  background-color: white;
+  float:inline-start;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  margin-top: 4px;
+  border-radius: 4px;
+  padding: 12px 16px 12px 20px;
+  
+}
+
+.tab button:hover {
+  background-color: #ddd;
+}
+
+
+
+.active-button{
+  border: none;
+  background-color: #5c8c24;
+  padding: 5px;
+  color: white;
+}
+
+.inactive-button{
+  border: none;
+  padding: 6px;
+  color:black;
+    background-color: hsl(88, 60%, 85%) ;
+    
+}
+
+.inactive-remark-btn{
+  border: none;
+  padding:  2px 35px 0px 10px;
+  color:white;
+  background-color: hsl(88, 60%, 85%) ;
+}
+
+.active-remark-btn{
+  border: none;
+  background-color: #5c8c24;
+  padding:  2px 35px 0px 10px;
+  color:white;
+
+}
+

@@ -1,0 +1,70 @@
+.stock-card {
+  width: 18vw;
+  border-radius: 10px;
+  align-items: center;
+  border: 2px solid #5c8c24;
+}
+.stock-card > h5 {
+  margin-top: 1rem;
+}
+.stock-card > h1 {
+  color: #5c8c24;
+}
+.stock-card > hr {
+  border: 1px solid #5c8c24;
+  width: 14vh;
+}
+
+.sales-card {
+  margin-top: 2rem;
+  width: 50vw;
+  border-radius: 10px;
+  border: 2px solid #5c8c24;
+  height: 50vh;
+}
+.sales-card> div {
+    height: 100% !important;
+}
+.available-stock-card {
+  margin-top: 2rem;
+  width: 30vw;
+  border: 0;
+  height: 50vh;
+}
+
+.ideal-top-card {
+  width: 100%;
+  border-radius: 10px;
+  border: 2px solid #5c8c24;
+  justify-content: center;
+}
+
+.ideal-top-card > div {
+  margin-top: 1rem;
+}
+.ideal-top-card > div > hr {
+  border: 1px solid #5c8c24;
+  width: 6vh;
+}
+
+.ideal-top-card > div > h3 {
+    color: #5c8c24;
+}
+
+.ideal-center-card {
+  width: 100%;
+  border-radius: 10px;
+  border: 2px solid #5c8c24;
+  justify-content: center;
+}
+.ideal-center-card > div {
+    height: 220px !important;
+}
+.ideal-bottom-card{
+    width: 100%;
+    border-radius: 10px;
+    border: 2px solid #fc2d00;
+    justify-content: center; 
+    text-align: center;
+    height: 10vh;
+}

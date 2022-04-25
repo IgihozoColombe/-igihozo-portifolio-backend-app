@@ -1,0 +1,51 @@
+
+.h2.flex-shrink-0 {
+  text-transform: capitalize;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 39px;
+  color: #484848;
+}
+
+.top-btn-group > div {
+  margin-left: 48px;
+}
+
+.top-btn-group > div > div > button:nth-child(1) {
+  margin-right: 30px;
+}
+
+.btn.text-white {
+  box-shadow: 3px 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 6px !important;
+  background-color: var(--new-primary-color);
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 16px;
+  width: 116px;
+  height: 46px;
+}
+
+.top-btn-group > div > div > button:nth-child(2) {
+  margin-right: 24px;
+}
+
+.top-btn-group {
+  margin-bottom: 34px;
+  margin-left: 31px;
+  flex-wrap: no-wrap;
+  text-transform: capitalize;
+}
+
+
+@media (max-width: 970px) {
+  .top-btn-group {
+    flex-wrap: wrap;
+  }
+  .top-btn-group > div {
+    margin-left: 0;
+  }
+  .h2.flex-shrink-0 {
+    margin-bottom: 1rem !important;
+  }
+}

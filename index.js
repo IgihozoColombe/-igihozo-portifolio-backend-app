@@ -57,7 +57,8 @@ require('./models/querries')
 app.use(express.json())
 app.use(cors())
 var bodyParser = require('body-parser');
-
+app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use('/user',require('./routes/user'))

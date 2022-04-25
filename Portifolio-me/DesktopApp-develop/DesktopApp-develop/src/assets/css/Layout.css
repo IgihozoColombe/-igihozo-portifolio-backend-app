@@ -1,0 +1,3 @@
+main:not([role='main']){
+  margin-left: 254px;
+}

@@ -1,0 +1,130 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
+
+
+
+
+.group-btn-div {
+  background: #5c8c24;
+  border-radius: 6px;
+  cursor: pointer;
+  color:white;
+  padding:8px 14px;
+  font-weight: 500;
+  
+}
+
+.tab{
+  background-color: white;
+  width: 50%;
+  border-radius: 13px;
+ margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: -30px;
+  padding-right: 0px;;
+  
+  
+}
+
+.tab-btn{
+  font-size: 15px;
+  font-weight: 600;
+}
+
+
+
+.group-header {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 39px;
+  color: #484848;
+  margin-left: -30px;
+  
+}
+
+
+  .group-header-div p {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 13px;
+    margin-bottom: 0px !important;
+    padding-top: -10px !important;
+  
+  }
+
+  .GroupWrapper {
+    background-color: #fff;
+  
+  }
+
+  .GroupWrapper thead {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 16px;
+    color: #8e939d;
+  }
+
+
+  .GroupWrapper tbody {
+    font-family: Ubuntu;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
+    color: #565b65;
+
+  }
+
+
+ .GroupWrapper th,
+.GroupWrapper td {
+  border: 2px solid #fff !important;
+}
+
+.GroupWrapper tbody td:nth-child(2){
+  color: #5c8c24 !important;
+ 
+}
+
+
+
+.tab button:hover {
+  background-color: #ddd;
+}
+
+
+
+.active-button{
+  border: none;
+  background-color: #5c8c24;
+  padding: 5px;
+  color: white;
+}
+
+.inactive-button{
+  border: none;
+  padding: 6px;
+  color:black;
+    background-color: hsl(88, 60%, 85%) ;
+    
+}
+
+.inactive-remark-btn{
+  border: none;
+  padding:  2px 35px 0px 10px;
+  color:white;
+  background-color: hsl(88, 60%, 85%) ;
+}
+
+.active-remark-btn{
+  border: none;
+  background-color: #5c8c24;
+  padding:  2px 35px 0px 10px;
+  color:white;
+
+}
+
+ */

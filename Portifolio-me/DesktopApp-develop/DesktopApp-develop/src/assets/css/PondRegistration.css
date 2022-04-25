@@ -1,0 +1,57 @@
+
+
+.farmer-btn{
+    width: 108px;
+    height: 46px;
+    margin: 15px 0;
+    background: #FFFFFF;
+    box-shadow: 3px 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #4a4a4a;
+    border-radius: 10px;
+    /* font-family: Montserrat; */
+    font-style: normal;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 16px;
+    color: #4A4A4A;
+}
+
+.p-text{
+    /* font-family: Montserrat; */
+    font-style: normal;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 39px;
+    color: #484848;
+  }
+
+.p-btn{
+  padding:8px 14px;
+    font-size: 13px;
+  }
+  .pondList th{
+  font-size: 11px;
+}
+.pondList td{
+  font-size: 11px;
+  text-align: center;
+}
+.tableActions{
+    position: absolute;
+    z-index: -1;
+    color:blue;
+}
+.action-btn{
+  background-color: #5C8C24;
+  border-radius: 2px;
+  padding:5px;
+  cursor: pointer;
+  color:white;
+}
+.remarks{
+  font-size:13px;
+  padding: 0 ;
+  position: relative;
+  width:20px;
+  height:20px;
+}
