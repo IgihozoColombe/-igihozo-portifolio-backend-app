@@ -10,15 +10,13 @@ let should = chai.should();
 chai.use(chaiHttp);
 
 describe('Articles', () => {
-    beforeEach((done) => {
-        Article.deleteOne({}, (err) => { 
-           done();           
-        });        
-    });
+ 
   describe('/GET article', () => {
       it('it should GET all the article', (done) => {
+        const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjYyNjY1M2QyZTA2MjAyMThiZGY4ZGMiLCJpYXQiOjE2NTA2MTcyNTQsImV4cCI6MTY1MDY0NjA1NH0.xJey94Df_pXNT0Nc_SiqfGIvxqT5mIzIycTABbLk-Pw"
             chai.request(server)
             .get('/article')
+            .set({ Authorization: `Bearer ${token}` })
             .end((err, res) => {
                   res.should.have.status(200);
                   res.body.should.be.a('array');
@@ -26,25 +24,11 @@ describe('Articles', () => {
               done();
             });
       });
+  
   });
   describe('/POST book', () => {
-      it('it should not POST a book without pages field', (done) => {
-          let article = {
-              title: "The Lord of the Rings",
-              body: "J.R.R. Tolkien",
-              status: "active"
-          }
-            chai.request(server)
-            .post('/article')
-            .send(article)
-            .end((err, res) => {
-                  res.should.have.status(200);
-                  res.body.should.be.a('object');
-                  
-              done();
-            });
-      });
       it('it should POST a book ', (done) => {
+        const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjYyNjY1M2QyZTA2MjAyMThiZGY4ZGMiLCJpYXQiOjE2NTA2MTcyNTQsImV4cCI6MTY1MDY0NjA1NH0.xJey94Df_pXNT0Nc_SiqfGIvxqT5mIzIycTABbLk-Pw"
           let article = {
               title: "The Lord of the Rings",
               body: "J.R.R. Tolkien",
@@ -52,13 +36,11 @@ describe('Articles', () => {
           }
             chai.request(server)
             .post('/article')
+            .set({ Authorization: `Bearer ${token}` })
             .send(article)
             .end((err, res) => {
                   res.should.have.status(200);
                   res.body.should.be.a('object');
-                //   res.body.book.should.have.property('title');
-                //   res.body.book.should.have.property('body');
-                //   res.body.book.should.have.property('status');
               done();
             });
       });
@@ -68,10 +50,12 @@ describe('Articles', () => {
   */
   describe('/GET/:id article', () => {
       it('it should GET a book by the given id', (done) => {
+        const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjYyNjY1M2QyZTA2MjAyMThiZGY4ZGMiLCJpYXQiOjE2NTA2MTcyNTQsImV4cCI6MTY1MDY0NjA1NH0.xJey94Df_pXNT0Nc_SiqfGIvxqT5mIzIycTABbLk-Pw"
           let article = new Article({ title: "The Lord of the Rings", body: "J.R.R. Tolkien", status: "active"});
           article.save((err, book) => {
               chai.request(server)
             .get('/article/' + article.id)
+            .set({ Authorization: `Bearer ${token}` })
             .send(article)
             .end((err, res) => {
                   res.should.have.status(200);
@@ -88,10 +72,12 @@ describe('Articles', () => {
   });
   describe('/PUT/:id article', () => {
     it('it should UPDATE a article given the id', (done) => {
+        const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjYyNjY1M2QyZTA2MjAyMThiZGY4ZGMiLCJpYXQiOjE2NTA2MTcyNTQsImV4cCI6MTY1MDY0NjA1NH0.xJey94Df_pXNT0Nc_SiqfGIvxqT5mIzIycTABbLk-Pw"
         let article = new Article({title: "The Chronicles of Narnia", body: "J.R.R. Tolkien", status: "pending"})
         article.save((err, book) => {
               chai.request(server)
               .put('/article/' + article.id)
+              .set({ Authorization: `Bearer ${token}` })
               .send({title: "The Chronicles of Narnia", body: "J.R.R. Tolkien", status: "pending"})
               .end((err, res) => {
                     res.should.have.status(200);
@@ -104,12 +90,14 @@ describe('Articles', () => {
 });
 describe('/DELETE/:id book', () => {
     it('it should DELETE a article given the id', (done) => {
+        const token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjYyNjY1M2QyZTA2MjAyMThiZGY4ZGMiLCJpYXQiOjE2NTA2MTcyNTQsImV4cCI6MTY1MDY0NjA1NH0.xJey94Df_pXNT0Nc_SiqfGIvxqT5mIzIycTABbLk-Pw"
         let article = new Article({title: "The Chronicles of Narnia", body: "J.R.R. Tolkien", status: "pending"})
         article.save((err, article) => {
               chai.request(server)
               .delete('/article/' + article.id)
+              .set({ Authorization: `Bearer ${token}` })
               .end((err, res) => {
-                    res.should.have.status(401);
+                    res.should.have.status(200);
                     res.body.should.be.a('object');
                 done();
               });
