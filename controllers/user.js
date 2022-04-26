@@ -16,8 +16,7 @@ exports.createUser=async(req,res)=>{
     let salt=await bcrypt.genSalt(5)
     let hashedPassword=await bcrypt.hash(password,salt)
     let newUser=await new User({
-        firstname:req.body.firstname,
-        lastname:req.body.lastname,
+        name:req.body.name,
         username:req.body.username,
         email:req.body.email,
         password:hashedPassword

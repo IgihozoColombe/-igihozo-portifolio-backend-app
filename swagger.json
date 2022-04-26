@@ -414,7 +414,7 @@
         ]
       }
     },
-    "/cont/contact/": {
+    "/query/queries/": {
       "get": {
         "tags": [
           "User"
@@ -448,7 +448,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/ContactModel"
+              "$ref": "#/definitions/Query"
             }
           }
         ],
@@ -465,10 +465,10 @@
         }
       }
     },
-    "/api/comments/{id}": {
+    "/user/comment/{id}": {
       "get": {
         "tags": [
-          "Blogs"
+          "Article"
         ],
         "description": "",
         "parameters": [
@@ -496,9 +496,9 @@
           }
         ]
       },
-      "patch": {
+      "put": {
         "tags": [
-          "Blogs"
+          "Article"
         ],
         "description": "",
         "parameters": [
@@ -513,7 +513,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/CommentModel"
+              "$ref": "#/definitions/User"
             }
           }
         ],
@@ -535,10 +535,10 @@
         ]
       }
     },
-    "/api/likes/{id}":{
-      "patch":{
+    "/article/like/{id}":{
+      "put":{
         "tags":[
-          "Blogs"
+          "Article"
         ],
         "parameters":[
           {
@@ -568,31 +568,14 @@
     }
   },
   "definitions": {
-    "LoginModel": {
+    "User": {
       "type": "object",
       "properties": {
-        "email": {
-          "type": "string",
-          "example": "john@gmail.com"
-        },
-        "password": {
-          "type": "string",
-          "example": "Password123"
-        }
-      },
-      "required": [
-        "email",
-        "password"
-      ]
-    },
-    "RegisterModel": {
-      "type": "object",
-      "properties": {
-        "first_name": {
+        "name": {
           "type": "string",
           "example": "John"
         },
-        "last_name": {
+        "username": {
           "type": "string",
           "example": "Snow"
         },
@@ -607,76 +590,53 @@
       },
       "required": [
         "name",
+        "username",
         "email",
         "password"
       ]
     },
-    "UpdateUserModel": {
-      "type": "object",
-      "properties": {
-        "first_name": {
-          "type": "string",
-          "example": "John Snow"
-        },
-        "last_name": {
-          "type": "string",
-          "example": "John Snow"
-        },        
-        "email": {
-          "type": "string",
-          "example": "john@gmail.com"
-        }        
-      },
-      "required": [
-        "first_name",
-        "last_name",
-        "email"
-      ]
-    },
-    "ContactModel": {
+    "Query": {
       "type": "object",
       "properties": {
         "name": {
           "type": "string",
-          "example": "jonas blue"
-        },
+          "example": "Marie min"
+        },    
         "email": {
           "type": "string",
-          "example": "john@gmail.com"
+          "example": "marie@gmail.com"
         },
+        "subject": {
+          "type": "string",
+          "example": "article"
+        } ,
         "message": {
           "type": "string",
-          "example": "Hi bruce"
-        }
+          "example": "this is my message"
+        }             
       },
       "required": [
+        "name",
         "email",
-        "password"
+        "subject",
+        "message"
       ]
     },
-    "CommentModel":{
-      "type":"object",
-      "properties":{
-       "comment":{
-         "type":"string",
-         "example":"nice one"
-       } 
-      }
-    },
-    "BlogModel": {
+    "Article": {
       "type": "object",
       "properties": {
-        "category": {
-          "type": "string",
-          "example": "6064e654b5c7475bac63ad22"
-        },
+       
         "title": {
           "type": "string",
-          "example": "Elon Musk Admits He Wants to Travel to Mars Because No One Hates Him There Yet"
+          "example": "The New Times (Rwanda"
         },
-        "content": {
+        "body": {
           "type": "string",
-          "example": "AUSTIN, Texas — Wiping tears from his eyes at a recent press conference, SpaceX CEO Elon Musk revealed that the reason he’s so keen on traveling to Mars is not for the potential benefits to science, but because it’s the one place he can think of where no one hates him yet."
+          "example": "The One Dollar Campaign (ODC) complex, established in 2014 to shelter Genocide survivors – mostly students who lived in orphanages and foster families, will be one of the facilities to accommodate migrants and asylum seekers from the U.K"
+        },
+        "status": {
+          "type": "string",
+          "example": "active"
         }
       },
       "required": [
@@ -685,18 +645,7 @@
         "body"
       ]
     },
-    "VerifyEmailModel": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "type": "number",
-          "example": 333333
-        }
-      },
-      "required": [
-        "code"
-      ]
-    },
+  
     "ChangePasswordModel": {
       "type": "object",
       "properties": {

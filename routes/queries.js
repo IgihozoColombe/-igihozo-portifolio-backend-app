@@ -6,8 +6,8 @@ const requireLogin = require('../middleware/requireLogin')
 router.get('/',(req,res) => {
     res.send("welcome to my app's queries")
 })
-router.post("/createQuery",QueriesController.createQuery)
-router.get('/getAllQueries',QueriesController.getAllQueries)
+router.post("/queries",QueriesController.createQuery)
+router.get('/queries',QueriesController.getAllQueries)
 
 module.exports=router
 
