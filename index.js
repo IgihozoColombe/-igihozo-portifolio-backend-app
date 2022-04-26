@@ -7,34 +7,10 @@ const PORT = process.env.PORT || 5000
 const URL = "mongodb://0.0.0.0:27017/articles";
 // mongodb+srv://marie:<password>@cluster0.4keie.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 const host = process.env.NODE_ENV !== 'production' ? process.env.PROD_HOST : `localhost:${PORT}`
-const swaggerJsDoc = require('swagger-jsdoc');
-const swaggerUI= require('swagger-ui-express')
-const options = {
-    definition: {
-        openapi: '3.0.0',
-      info: {
-        title: "Portifolio API",
-        version: "2.0.0",
-        description: "ITS API Swagger",
-      },
-      components: {
-        securitySchemes: {
-            bearerAuth: {
-                type: "http",
-                scheme: "bearer",
-              },
-        },
-      },
-      security: [
-        {
-          bearerAuth: [],
-        },
-      ],
-    },
-    apis: ["./routes/*.js"]
-  };
-  const specs = swaggerJsDoc(options);
-  app.use("/swagger", swaggerUI.serve, swaggerUI.setup(specs));
+
+const swaggerUi= require('swagger-ui-express')
+ const swaggerDocument=require("./swagger.json")
+
 
 
 mongoose.connect(URL,{
@@ -64,7 +40,7 @@ app.use(express.json());
 app.use('/user',require('./routes/user'))
 app.use('/article', require('./routes/article'))
 app.use('/query', require('./routes/queries'))
-
+app.use('/swagger',swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 if(process.env.NODE_ENV=="production"){
     app.use(express.static('client/build'))
     const path = require('path')
