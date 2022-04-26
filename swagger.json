@@ -5,7 +5,7 @@
     "title": "My Portifolio  APIs",
     "description": "Igihozo Portiflio APIs "
   },
-  "host": "https://igihozo-api.herokuapp.com/",
+  "host": "localhost:5000",
   "basePath": "/",
   "schemes": [
     "https",

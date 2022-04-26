@@ -9,7 +9,8 @@ const URL = "mongodb://0.0.0.0:27017/articles";
 const host = process.env.NODE_ENV !== 'production' ? process.env.PROD_HOST : `localhost:${PORT}`
 
 const swaggerUi= require('swagger-ui-express')
- const swaggerDocument=require("./swagger.json")
+ const swaggerDocument=require('./swagger.json')
+
 
 
 
