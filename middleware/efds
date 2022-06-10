@@ -1,0 +1,130 @@
+import chai, { expect } from "chai";
+import chaiHttp from "chai-http";
+import dotenv from "dotenv";
+import { Trip } from "../../src/models";
+dotenv.config();
+chai.should();
+chai.use(chaiHttp);
+
+const server = require("../../src/index");
+describe("GET /api/v1/trips",()=>{
+  /**
+   * Test GET route
+   */
+   describe("GET /api/v1/trips/all", () => {
+    it("It should GET a list of all trips", async () => {
+      const res = await chai.request(server).get("/api/v1/trips/all");
+      expect(res).to.have.status(200);
+    });
+
+    it("It should NOT GET a list of all trips", async () => {
+      const res = await chai.request(server).get("/api/trip/all");
+      expect(res).to.have.status(404);
+    });
+  });
+
+  /**
+   * Test GET route for specific trip
+   */
+  describe("GET /api/v1/trips/:id", () => {
+    it("It should GET a specific trip by its specific uuid", async () => {
+      const uuid = 9,
+        res = await chai.request(server).get("/api/v1/trips/" + uuid);
+      expect(res).to.have.status(200);
+      expect(res.body).to.be.a("object");
+    });
+  });
+  it("It should not GET a specific trip by its specific uuid", async () => {
+    const uuid = 9,
+      res = await chai.request(server).get("/api/v1/trip/" + uuid);
+    expect(res).to.have.status(404);
+    expect(res.body).to.be.a("object");
+  });
+});
+
+describe("POST /api/v1/trips/create", () => {
+  
+  it('It should create a trip', (done) => {
+    const trip = {
+      title: 'First Awesome trip',
+      price: '$9.99',
+      description: 'This is the awesome trip'
+    };
+    chai.request(server)
+      .post('/api/v1/trips/create')
+      .set('Accept', 'application/json')
+      .send(trip)
+      .end((err, res) => {
+        expect(res.status).to.equal(201);
+        expect(res.body.data).to.include({
+          user:1,
+          source: "Muhanga",
+          destination: "Kigali",
+          DateOfTravel: "2022-06-08 07:22:08.305 +00:00",
+          DateOfDestination: "2022-06-19 07:22:08.305 +00:00",
+          status: "pending",
+        });
+        done();
+      });
+  });
+    it("It should not POST a new trip", (done) => {
+      const newUser = {
+        source: "Muhanga",
+        destination: "Kigali",
+        DateOfTravel: "2022-06-08 07:22:08.305 +00:00",
+        DateOfDestination: "2022-06-19 07:22:08.305 +00:00",
+        status: "pending",
+      };
+  
+      chai
+        .request(server)
+        .post("/api/v1/trip/create")
+        .send(newUser)
+        .end((err, response) => {
+          response.should.have.status(404);
+          response.should.be.a("object");
+
+          done();
+        });
+    });
+  
+    describe('PUT /api/v1/trips/:id', () => {
+    
+      it('It should update a trip', (done) => {
+        const tripId = 9;
+        const updatedtrip = {
+          source: "Muhanga",
+          destination: "Kigali",
+          DateOfTravel: "2022-06-08T07:22:08.305Z",
+          DateOfDestination: "2022-06-08T07:22:08.305Z",
+          status: "pending",
+        };
+        chai.request(server)
+          .put(`/api/v1/trips/${tripId}`)
+          .set('Accept', 'application/json')
+          .send(updatedtrip)
+          .end((err, res) => {
+            expect(res.status).to.equal(200);
+            expect(res.body.data.source).equal(updatedtrip.source);
+            expect(res.body.data.destination).equal(updatedtrip.destination);
+            expect(res.body.data.DateOfTravel).equal(updatedtrip.DateOfTravel);
+            expect(res.body.data.DateOfDestination).equal(updatedtrip.DateOfDestination);
+            expect(res.body.data.status).equal(updatedtrip.status);
+            done();
+          });
+      });
+  });
+  describe("DELETE /api/v1/trips/:id",()=>{
+    it('It should delete a trip', (done) => {
+      const tripId = 9;
+      chai.request(server)
+        .delete(`/api/v1/trips/${tripId}`)
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body.data).to.include({});
+          done();
+        });
+    });
+  })
+  });
